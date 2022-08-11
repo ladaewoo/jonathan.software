@@ -10,6 +10,7 @@ const https             = require('https');
 const http              = require('http');
 const fs                = require('fs');
 const app               = express();
+const path              = require('path');
 
 let Records = null;
 let entries = [];
@@ -174,13 +175,15 @@ app.use((request, response, next) => {
 
 let subdominios = express.Router();
 
+subdominios.use('/assets', express.static(path.join(__dirname, 'landing/assets')));
+
 subdominios.get('/', (req, res) => {
     let subdomain = req.headers.host.split('.');
 
     if (subdomain.length > 3) {
         res.send(`Bienvenido a pruebas de subdominios: ${subdomain.shift()}`);
     } else {
-        res.send(`<h1 style="font-style:italic;">Eagle Solutions</h1>`);    
+        res.sendFile(path.join(__dirname, '/landing/index.html'));  
     }
 });
 
