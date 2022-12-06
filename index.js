@@ -187,6 +187,14 @@ subdominios.get('/', (req, res) => {
     }
 });
 
+let fintech = express.Router();
+
+fintech.all('/', (req, res) => {
+    res.send({
+        host : req.headers.host
+    });
+});
+
 let main = express.Router();
 
 main.all('/', (req, res) => {
@@ -222,6 +230,7 @@ main.get('/agregar-subdominio/:subdominio', (req, res) => {
 
 app.use(subdomain('jonathan.software', main));
 app.use(subdomain('*.eaglesolutions', subdominios));
+app.use(subdomain('finanzas.tech', fintech));
 
 const initialize = async () => {
     const httpsServer = https.createServer(credentials, app);
